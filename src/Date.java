@@ -72,7 +72,7 @@ public String toString () {
 // gibt eine passende String - Darstellung des Datums zurueck
 }
 public boolean equals ( Date d ) {
-// ueberprueft , ob this und d das gleiche Datum haben .
+	return this.day == d.day && this.month == d.month && this.year == d.year;
 }
 public boolean isSameDay ( Date d ) {
 // ueberprueft , ob Tag und Monat gleich sind
