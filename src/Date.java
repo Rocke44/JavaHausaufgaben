@@ -2,7 +2,7 @@
  * Name: André Spinnler
  * Aufgabe: Blatt 3
  * Datum: 26.10.2016
- * Status: In Bearbeitung
+ * Status: In Bearbeitung mit Git
 */
 
 public class Date {
