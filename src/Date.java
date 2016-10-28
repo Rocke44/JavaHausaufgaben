@@ -1,7 +1,7 @@
 /*
  * Namen: André Spinnler / Jakob Rockenbauch
  * Aufgabe: Blatt 3
- * Datum: 26.10.2016
+ * Datum: 28.10.2016
  * Status: In Bearbeitung mit Git
 */
 
