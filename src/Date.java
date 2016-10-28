@@ -9,7 +9,14 @@ public class Date {
 public static final int [] lengthOfMonths = {31 ,28 ,31 ,30 ,31 ,30 ,31 ,31 ,30 ,31 ,30 ,31};
 public final String [] weekdays = {" Mon "," Tue "," Wed "," Thu "," Fri "," Sat "," Sun "};
 private int day , month , year ;
-public static int getLengthOfMonth (int month , int year ) {return 0;} //STUB
+public static int getLengthOfMonth (int month , int year )
+{
+	if(month ==2&&isLeapYear(year))
+	{
+		return 29;
+	}
+	return lengthOfMonths[month-1];
+}
 public static boolean isLeapYear (int year ) {
 	if(year%400==0)
 	{
@@ -26,13 +33,12 @@ public static boolean isLeapYear (int year ) {
 	return false;
 }
 public Date (int day , int month , int year ) {
-	if(month < 0 || month > 12 || day < 0 || (Date.isLeapYear(year) && month == 2 && day > 29) || (!Date.isLeapYear(year) && day > Date.lengthOfMonths[month]) ) { throw new InvalidDateException();}
+	if(month < 0 || month > 12 || day < 0 || (Date.isLeapYear(year) && month == 2 && day > 29) || (!Date.isLeapYear(year) && day > Date.lengthOfMonths[month-1]) ) { throw new InvalidDateException();}
 	if(year < 1800 || year > 2100) {throw new DateOutOfRangeException();}
 	
 	this.day = day;
 	this.month = month;
 	this.year = year;
-	// wirft eine Exception ( siehe Text unten )
 }
 public Date (int day , int year ) {
 	if(day < 0 || day > 366 || ( !isLeapYear(year) && day == 366) ){ throw new InvalidDateException();}
@@ -54,15 +60,13 @@ public Date (int day , int year ) {
 		}
 		day -= Date.lengthOfMonths[i];
 	}
-	// Tag geht von 1 bis 366
-	// wirft eine Exception ( siehe Text unten )
 }
 public Date tomorrow () {
 	int tag = this.day;
 	int monat = this.month;
 	int jahr = this.year;
 	tag++;
-	if(tag>lengthOfMonths[monat])
+	if(tag>lengthOfMonths[monat-1])
 	{
 		tag = 1;
 		monat++;
@@ -87,7 +91,7 @@ public Date yesterday () {
 			monat = 12;
 			jahr--;
 		}
-		tag = lengthOfMonths[monat];
+		tag = lengthOfMonths[monat-1];
 	}
 	return new Date(tag, monat, jahr);
 }
