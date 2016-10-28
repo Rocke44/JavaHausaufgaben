@@ -96,8 +96,31 @@ public Date yesterday () {
 	return new Date(tag, monat, jahr);
 }
 public String getWeekday () {
+	int abstand = 0;
+	if(this.month <= 4 ){
+		abstand += this.lengthOfMonths[this.month-1]-this.day;
+		for(int i = this.month+1 ; i < 4; i++){
+			abstand += this.lengthOfMonths[i-1];
+			if ( (i == 2) && isLeapYear(this.year)){
+				abstand += 1;
+			}
+		}
+		abstand += 4;
+	abstand %= 7;
+	return this.weekdays[7-abstand];
+	}else{
+		abstand -= 4;
+		for(int i = 4 ; i < this.month; i++){
+			abstand += this.lengthOfMonths[i-1];
+		}
+		abstand += this.lengthOfMonths[this.month-1];
+		abstand %= 7;
+		return this.weekdays[abstand];
+	}
+	
+	
 // gibt den Wochentag des Datums ( Mo - So ) zurueck
-// Berechnungsmethode : siehe Text unten
+// Berechnungsmethode : Doomsday Methode
 
 }
 public String toString () {
