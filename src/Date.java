@@ -132,4 +132,16 @@ public boolean equals ( Date d ) {
 public boolean isSameDay ( Date d ) {
 	return (this.day == d.day) && (this.month == d.month);
 }
+public int getDay()
+{
+	return this.day;
+}
+public int getMonth()
+{
+	return this.month
+}
+public int getYear()
+{
+	return this.year;
+}
 }
