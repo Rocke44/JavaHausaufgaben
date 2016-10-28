@@ -69,13 +69,12 @@ public String getWeekday () {
 
 }
 public String toString () {
-// gibt eine passende String - Darstellung des Datums zurueck
+	return year + "-" + month + "-" + day ;
 }
 public boolean equals ( Date d ) {
 	return this.day == d.day && this.month == d.month && this.year == d.year;
 }
 public boolean isSameDay ( Date d ) {
-// ueberprueft , ob Tag und Monat gleich sind
-// ( ohne Beruecksichtigung des Jahres )
+	return (this.day == d.day) && (this.month == d.month);
 }
 }
