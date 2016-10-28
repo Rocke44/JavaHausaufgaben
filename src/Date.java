@@ -58,10 +58,38 @@ public Date (int day , int year ) {
 	// wirft eine Exception ( siehe Text unten )
 }
 public Date tomorrow () {
-// gibt das Datum von this + 1 Tag zurueck
+	int tag = this.day;
+	int monat = this.month;
+	int jahr = this.year;
+	tag++;
+	if(tag>lengthOfMonths[monat])
+	{
+		tag = 1;
+		monat++;
+		if(monat>12)
+		{
+			monat = 1;
+			jahr++;
+		}
+	}
+	return new Date(tag, monat, jahr);
 }
 public Date yesterday () {
-// gibt das Datum von this - 1 Tag zurueck
+	int tag = this.day;
+	int monat = this.month;
+	int jahr = this.year;
+	tag--;
+	if(tag==0)
+	{
+		monat--;
+		if(monat == 0)
+		{
+			monat = 12;
+			jahr--;
+		}
+		tag = lengthOfMonths[monat];
+	}
+	return new Date(tag, monat, jahr);
 }
 public String getWeekday () {
 // gibt den Wochentag des Datums ( Mo - So ) zurueck
