@@ -1,5 +1,6 @@
 /*
  * Namen: Andre Spinnler / Jakob Rockenbauch
+ * Namen: Andr� Spinnler / Jakob Rockenbauch
  * Aufgabe: Blatt 3
  * Datum: 28.10.2016
  * Status: Fertig
