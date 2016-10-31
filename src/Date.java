@@ -1,6 +1,5 @@
 /*
  * Namen: Andre Spinnler / Jakob Rockenbauch
- * Namen: Andr� Spinnler / Jakob Rockenbauch
  * Aufgabe: Blatt 3
  * Datum: 28.10.2016
  * Status: Fertig
@@ -76,7 +75,7 @@ public Date tomorrow () {
 	int monat = this.month;
 	int jahr = this.year;
 	tag++;
-	if(tag>lengthOfMonths[monat-1])
+	if(tag>lengthOfMonths[monat-1] && ( !isLeapYear(year) || monat != 2)
 	{
 		tag = 1;
 		monat++;
@@ -102,6 +101,10 @@ public Date yesterday () {
 			jahr--;
 		}
 		tag = lengthOfMonths[monat-1];
+        if(isLeapYear(jahr)&&monat==2)
+        {
+            tag++;
+        }
 	}
 	return new Date(tag, monat, jahr);
 }
