@@ -1,16 +1,17 @@
 /*
- * Namen: André Spinnler / Jakob Rockenbauch
+ * Namen: Andre Spinnler / Jakob Rockenbauch
  * Aufgabe: Blatt 3
  * Datum: 28.10.2016
- * Status: In Bearbeitung mit Git
+ * Status: Fertig
 */
 
 public class Date {
 public static final int [] lengthOfMonths = {31 ,28 ,31 ,30 ,31 ,30 ,31 ,31 ,30 ,31 ,30 ,31};
-public final String [] weekdays = {" Mon "," Tue "," Wed "," Thu "," Fri "," Sat "," Sun "};
+public final String [] weekdays = {"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
 private int day , month , year ;
 public static int getLengthOfMonth (int month , int year )
 {
+	if(month < 1 || month > 12){ throw new InvalidDateException();}
 	if(month ==2&&isLeapYear(year))
 	{
 		return 29;
@@ -33,34 +34,42 @@ public static boolean isLeapYear (int year ) {
 	return false;
 }
 public Date (int day , int month , int year ) {
-	if(month < 0 || month > 12 || day < 0 || (Date.isLeapYear(year) && month == 2 && day > 29) || (!Date.isLeapYear(year) && day > Date.lengthOfMonths[month-1]) ) { throw new InvalidDateException();}
+	if(month < 1 || month > 12 || day < 1 || (Date.isLeapYear(year) && month == 2 && day > 29) || ((!Date.isLeapYear(year) && day > Date.lengthOfMonths[month-1])) ) { throw new InvalidDateException();}
 	if(year < 1800 || year > 2100) {throw new DateOutOfRangeException();}
-	
+
 	this.day = day;
 	this.month = month;
 	this.year = year;
 }
 public Date (int day , int year ) {
-	if(day < 0 || day > 366 || ( !isLeapYear(year) && day == 366) ){ throw new InvalidDateException();}
+	if(day < 1 || day > 366 || ( !isLeapYear(year) && day == 366) ){ throw new InvalidDateException();}
 	if(year < 1800 || year > 2100) {throw new DateOutOfRangeException();}
-	
+
 	for(int i = 0; i < 12 ; i++){
 		if(day <= Date.lengthOfMonths[i]){
 			this.day = day;
 			this.month = i+1;
 			this.year = year;
+			break;
 		}
 		if(i == 1 && isLeapYear(year)){
 			if(day == Date.lengthOfMonths[i]+1){
 				this.day = day;
 				this.month = i+1;
 				this.year = year;
+				break;
 			}
 			day--;
 		}
 		day -= Date.lengthOfMonths[i];
 	}
 }
+
+
+public int getDay(){return this.day;}
+public int getMonth(){return this.month;}
+public int getYear(){return this.year;}
+
 public Date tomorrow () {
 	int tag = this.day;
 	int monat = this.month;
@@ -96,33 +105,34 @@ public Date yesterday () {
 	return new Date(tag, monat, jahr);
 }
 public String getWeekday () {
+	int cDD = (8 - ((this.year / 100) % 4) * 2) % 7;        //centuryDD
+	int jDD = (this.year % 100 + ((this.year % 100) / 4) + cDD) % 7; //JahresDD
+
 	int abstand = 0;
-	if(this.month <= 4 ){
-		abstand += this.lengthOfMonths[this.month-1]-this.day;
-		for(int i = this.month+1 ; i < 4; i++){
-			abstand += this.lengthOfMonths[i-1];
-			if ( (i == 2) && isLeapYear(this.year)){
+	if (this.month <= 4) {
+		abstand += this.lengthOfMonths[this.month - 1] - this.day;
+		for (int i = this.month + 1; i < 4; i++) {
+			abstand += this.lengthOfMonths[i - 1];
+			if ((i == 2) && isLeapYear(this.year)) {
 				abstand += 1;
 			}
 		}
 		abstand += 4;
-	abstand %= 7;
-	return this.weekdays[7-abstand];
-	}else{
-		abstand -= 4;
-		for(int i = 4 ; i < this.month; i++){
-			abstand += this.lengthOfMonths[i-1];
-		}
-		abstand += this.lengthOfMonths[this.month-1];
 		abstand %= 7;
-		return this.weekdays[abstand];
+		return this.weekdays[((7 - abstand) + jDD) % 7];
+	} else {
+		abstand += this.lengthOfMonths[3]-4;
+		for (int i = 5; i < this.month; i++) {
+			abstand += this.lengthOfMonths[i - 1];
+		}
+		abstand += this.day;
+		abstand %= 7;
+		return this.weekdays[(abstand + jDD) % 7];
 	}
-	
-	
 // gibt den Wochentag des Datums ( Mo - So ) zurueck
 // Berechnungsmethode : Doomsday Methode
-
 }
+@Override
 public String toString () {
 	return year + "-" + month + "-" + day ;
 }
